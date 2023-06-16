@@ -23,7 +23,7 @@ public class EnterRecipientNumberState implements USSDState, InputValidation {
                 String recipientNumber;
 
                 do {
-                    recipientNumber = ussd.takeInput("Recipient's number");
+                    recipientNumber = ussd.takeInput("Enter recipient's number");
                 } while (!validateInput(recipientNumber));
 
                 ussd.changeState(new EnterAmountState(ussd, recipientNumber));
