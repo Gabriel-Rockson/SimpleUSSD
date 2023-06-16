@@ -1,6 +1,6 @@
 package ussd;
 
-public class EnterAmountState implements USSDState, InputValidation {
+public class EnterAmountState implements USSDState {
     USSD ussd;
     String recipientNumber = null;
 
@@ -30,19 +30,17 @@ public class EnterAmountState implements USSDState, InputValidation {
                     // TODO: display 'Invalid Input' to the user if the amount
                     // is not valid before you proceed
 
-                    amount = Float.parseFloat(ussd.takeInput("Enter amount"));
+                    try {
+                        amount = Float.parseFloat(ussd.takeInput("Enter " + "amount"));
+                    }
+                    catch (Exception ignored) {}
 
-                } while (!validateInput(String.valueOf(amount)));
+                } while (!Validation.validateAirtimeAmount(amount));
 
 
                 ussd.changeState(new ConfirmAirtimePurchaseState(ussd, amount, recipientNumber));
             }
             default -> Prompt.invalidInput();
         }
-    }
-
-    @Override
-    public boolean validateInput(String input) {
-        return Float.parseFloat(input) > 0;
     }
 }

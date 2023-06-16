@@ -1,6 +1,6 @@
 package ussd;
 
-public class EnterRecipientNumberState implements USSDState, InputValidation {
+public class EnterRecipientNumberState implements USSDState {
     USSD ussd;
 
     public EnterRecipientNumberState(USSD ussd) {
@@ -24,16 +24,11 @@ public class EnterRecipientNumberState implements USSDState, InputValidation {
 
                 do {
                     recipientNumber = ussd.takeInput("Enter recipient's number");
-                } while (!validateInput(recipientNumber));
+                } while (!Validation.validateRecipientPhoneNumber(recipientNumber));
 
                 ussd.changeState(new EnterAmountState(ussd, recipientNumber));
             }
             default -> Prompt.invalidInput();
         }
-    }
-
-    @Override
-    public boolean validateInput(String input) {
-        return input.length() == 10;
     }
 }
