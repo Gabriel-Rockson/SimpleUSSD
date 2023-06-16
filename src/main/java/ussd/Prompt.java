@@ -1,8 +1,10 @@
 package ussd;
 
-public abstract class Prompt {
+public final class Prompt {
 
-    private Prompt() {}
+    private Prompt() {
+        throw new UnsupportedOperationException("Instances of Prompt class cannot be created.");
+    }
 
     public static void showOptions(String[] options) {
         for (int i = 0; i < options.length; i++) {
